@@ -43,6 +43,7 @@ def jsontomonotables(filein, fileout):
                         if columns[i] < len(l[i]):
                             columns[i] = len(l[i])
                 display_sep(output, columns)
+                separator_count = 0
                 for l in data['data']:
                     output.write('|')
                     for c in range(0, len(l)):
@@ -52,6 +53,12 @@ def jsontomonotables(filein, fileout):
                             output.write(' ')
                         output.write(' |')
                     output.write('\n')
+                    if data['separator'] and data['separator']['mode']:
+                        if data['separator']['mode'] == 'count':
+                            separator_count += 1
+                            if separator_count == data['separator']['amount']:
+                                separator_count = 0
+                                display_sep(output, columns)
                 display_sep(output, columns)
 
 
